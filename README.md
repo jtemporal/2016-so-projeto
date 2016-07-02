@@ -6,8 +6,11 @@ Grupo:
 -----
 
 *[André Pessoni]()
+
 *[Catharina Bermal]()
+
 *[Jessica Temporal](https://github.com/jtemporal)
+
 *[João Paulo Peres]()
 
 

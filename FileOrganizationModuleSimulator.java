@@ -7,8 +7,10 @@ import java.util.Scanner;
 import java.io.IOException;
 
 /**
- *
+ * @author Andre Pessoni
  * @author Catharina Bermal
+ * @author Jessica Temporal
+ * @author Joao Paulo Peres
  */
 
 public class FileOrganizationModuleSimulator {

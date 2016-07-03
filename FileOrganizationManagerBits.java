@@ -40,8 +40,11 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         System.out.println("-----------------------------------------");
         System.out.println("Estes sao os dados do seu arquivo:");
 
-        //enfiar um try catch aqui provavelmente esse: FileNotFoundException
+        try {
             raf = new RandomAccessFile(arq, "rw");
+        }catch(IOException e){
+            System.out.println("Erro: falha ao abrir o arquivo");
+        }
         
         // lê a primeira linha do arquivo de blocos
         linha = raf.readLine();

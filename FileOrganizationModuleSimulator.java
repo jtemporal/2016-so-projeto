@@ -106,7 +106,7 @@ public class FileOrganizationModuleSimulator {
                     
                     case 7:
 
-                        System.out.print("\nLista de blocos livres: ");
+                        System.out.print("\nLista de blocos ocupados: ");
                         usedBlck = fomB.getUsedFileBlockList();
                         for (int i=0; i<usedBlck.length; i++){
                             System.out.print(usedBlck[i]+" ");

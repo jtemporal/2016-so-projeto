@@ -217,14 +217,11 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     }
     //***************************************************
     
-    //***************************************************Falta manter a estrutura do arquivo
+    //***************************************************
     @Override
     public boolean saveToFile(String fileName){
         String escrever="";
         col = countCol(bits); // quantidade de posicoes por linha
-        linhas = vector.size()/col; // quantidade de linhas
-        blocos = vector.size(); // quantidade total de posicoes
-        // System.out.println(col);
         try{
             salva = new RandomAccessFile(fileName, "rw");
             for(int i=0; i<vector.size(); i++){

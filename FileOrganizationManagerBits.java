@@ -220,7 +220,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     public boolean saveToFile(String fileName){
         String escrever="";
         col = countCol(bits);
-        System.out.println(col);
+        // System.out.println(col);
         try{
             salva = new RandomAccessFile(fileName, "rw");
             for(int i=0; i<vector.size(); i++){

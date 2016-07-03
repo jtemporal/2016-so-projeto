@@ -124,6 +124,7 @@ public class FileOrganizationModuleSimulator {
                     break;
 
                     case 0:
+                        System.out.println("Hasta la vista, baby.");
                         System.exit(0);
                     break;
                 }

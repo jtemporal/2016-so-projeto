@@ -81,7 +81,12 @@ public class FileOrganizationModuleSimulator {
                         for(int i=0; i<aux; i++){
                             desaloc[i] = sc.nextInt();
                         }
-                        fomB.freeDataBlocks(desaloc);
+                        if (fomB.freeDataBlocks(desaloc)){
+                            System.out.println("Blocos desalocados com sucesso!");
+                        }
+                        else {
+                            System.out.println("Falha ao desalocar blocos :(");
+                        }
                     break;
 
                     case 4:

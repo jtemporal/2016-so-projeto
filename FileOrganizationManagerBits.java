@@ -131,12 +131,17 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         id = blockId;
         for(int i=0; i<vector.size(); i++){
             for(int j=0; j<blockId.length; j++){
-                if(id[j] == i){
-                    vector.set(i, "0");
+                if ((id[j] < 0) || (id[j] >= vector.size())){
+                    return false;
+                    
+                }
+                else {
+                    if(id[j] == i){
+                        vector.set(i, "0");
+                    }
                 }
             }
         }
-        System.out.println(vector);
         return true;
     }
     //***************************************************
@@ -304,10 +309,6 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         return linhas;
     }
 
-    public int countBlocos(int linhas, int col){
-        return linhas * col;
-    }
-
     // metodo aux imprime dados do arquivo
     public void imprimeDados(String bits[], RandomAccessFile raf){
         col = countCol(bits);
@@ -316,7 +317,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         linhas = countLinhas(raf);
         System.out.println("Numero de linhas: "+linhas);
         
-        blocos = countBlocos(linhas, col);
+        blocos = linhas * col; 
         System.out.println("Nemero de blocos: "+blocos);
     }
 }

@@ -23,6 +23,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     String linha; // armazena a linha lida pelo buffer
     String arq;
     String op;
+    String bits[];
     int linhas=1; // para contar quantas linhas tem o arquivo
     int tamanho=0; // tamanho total do vetor de bits
     int col=0; // para contar as colunas
@@ -44,7 +45,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         linha = raf.readLine();
 
         // salva os blocos da primeira linha num vetor
-        String bits[] = linha.split(" ");
+        bits = linha.split(" ");
         
         // imprime dados do arquivo
         imprimeDados(bits, raf);
@@ -218,10 +219,12 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     @Override
     public boolean saveToFile(String fileName){
         String escrever="";
+        col = countCol(bits);
+        System.out.println(col);
         try{
             salva = new RandomAccessFile(fileName, "rw");
             for(int i=0; i<vector.size(); i++){
-                escrever +=(vector.get(i));
+                escrever +=(vector.get(i)+" ");
             }
             salva.writeChars(escrever);
             salva.close();
@@ -294,6 +297,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         return linhas;
     }
 
+    public int countBlocos(int linhas, int col){
+        return linhas * col;
+    }
+
     // metodo aux imprime dados do arquivo
     public void imprimeDados(String bits[], RandomAccessFile raf){
         col = countCol(bits);
@@ -302,7 +309,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         linhas = countLinhas(raf);
         System.out.println("Numero de linhas: "+linhas);
         
-        blocos = linhas * col;
+        blocos = countBlocos(linhas, col);
         System.out.println("Nemero de blocos: "+blocos);
     }
 }

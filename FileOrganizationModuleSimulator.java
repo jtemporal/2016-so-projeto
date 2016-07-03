@@ -117,7 +117,7 @@ public class FileOrganizationModuleSimulator {
                     case 8:
                         System.out.println("Tentando salvar o arquivo ;)");
                         if(fomB.saveToFile(args[1])){
-                            System.out.println("Arquivo salvo com sucesso!");
+                            System.out.println("\nArquivo salvo com sucesso!");
                         } else {
                             System.out.println("Falha ao salvar o arquivo!");
                         }

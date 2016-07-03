@@ -9,8 +9,10 @@ import java.util.ArrayList;
  */
 
 /**
- *
+ * @author Andre Pessoni
  * @author Catharina Bermal
+ * @author Jessica Temporal
+ * @author Joao Paulo Peres
  */
 public class FileOrganizationManagerBits implements ManagementInterface {
     
@@ -227,6 +229,9 @@ public class FileOrganizationManagerBits implements ManagementInterface {
             salva = new RandomAccessFile(fileName, "rw");
             for(int i=0; i<vector.size(); i++){
                 escrever +=(vector.get(i)+" ");
+                if ((i+1) % col == 0) {
+                    escrever += '\n';
+                }
             }
             salva.writeChars(escrever);
             salva.close();

@@ -71,6 +71,7 @@ public class FileOrganizationModuleSimulator {
                     break;
 
                     case 3:
+                        fomB.imprimirVetor();
                         System.out.println("\nQuantos blocos voce deseja desalocar?");
                         aux = sc.nextInt();
                         desaloc = new int [aux];

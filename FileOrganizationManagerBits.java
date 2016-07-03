@@ -21,6 +21,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     RandomAccessFile raf; // para ler as linhas do arquivo
     String linha; // armazena a linha lida pelo buffer
     String arq;
+    String op;
     int linhas=1; // para contar quantas linhas tem o arquivo
     int tamanho=0; // tamanho total do vetor de bits
     int col=0; // para contar as colunas
@@ -82,23 +83,18 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     //********************FUNCIONA***************************
     @Override
     public void compact(){
-        for(int i=0; i<vector.size(); i++){
-            if(vector.get(i).equals("0")){
-                livre++;
-            }
-            else 
-                ocupado++;
-        }
+        
+        livre = contaBlocos("livre");
+        ocupado = contaBlocos("ocupado");
+
         System.out.println("\nBlocos livres = "+livre +" / "+ "Blocos ocupados = "+ ocupado);
         vector.clear();
         for(int j=0; j<blocos; j++){
             if(ocupado>0){
-                //vector.remove(j);
                 vector.add("1");
                 ocupado--;
             }
             else{
-                //vector.remove(j);
                 vector.add("0");
             }
         } 
@@ -106,15 +102,23 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     }
     //*****************************************************
     
-    //*************FUNCIONA********************************MAS FALTA CORRIGIR A ENTRADA E UM VALOR INVALIDO: 0 OU > QUE O NUMERO DE BLOCOS LIVRES
+    //*************FUNCIONA********************************
     @Override
     public int[] allocateDataBlock(int numberOfBlocks){
             int num;
             num = numberOfBlocks;
-            for(int i=0; i<vector.size(); i++){
-                if(vector.get(i).equals("0") && num>0){
-                    vector.set(i, "1");
-                    num--;
+            
+            livre = contaBlocos("livre");
+            if((num<0) || (num>vector.size()) || (num>livre)){
+                System.out.println("Erro: Valor invalido.");
+                System.exit(-1);
+            }
+            else{
+                for(int i=0; i<vector.size(); i++){
+                    if(vector.get(i).equals("0") && num>0){
+                        vector.set(i, "1");
+                        num--;
+                     }
                 }
             }
             System.out.print(vector);
@@ -123,7 +127,6 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     //****************************************************
     
     //**************FUNCIONA******************************
-    // acho q tem que aqui imprimir de novo o vetor de bits antes de pedir os blocos
     @Override
     public boolean freeDataBlocks(int[] blockId){
         int id[];
@@ -172,31 +175,42 @@ public class FileOrganizationManagerBits implements ManagementInterface {
     
     @Override
     public int[] getEmptyFileBlockList(){
-        int freeBlck[];
-
+        int emptyBlck[];
+        int aux=0;
+        
+        // conta blocos livres e instancia um vetor para armazenar os indices
+        // dos blocos livres
+        livre = contaBlocos("livre");
+        emptyBlck = new int[livre];
+        
+        // pecorre o vetor de bits e salva os indices dos blocos livres
         for(int i=0; i<vector.size(); i++){
             if(vector.get(i).equals("0")){
-                livre++;
+                emptyBlck[aux]=i;
+                aux++;
             }
         }
-
-        freeBlck = new int[livre];
-        int aux = livre;
-        int cont=0;
-        for(int i=0; i<vector.size(); i++){
-            if(vector.get(i).equals("0")){
-                freeBlck[cont]=i;
-                cont++;
-            }
-        }
-        return freeBlck;
+        return emptyBlck;
     }
     
     @Override
     public int[] getUsedFileBlockList(){
-        int dois[];
-        dois = new int[10];
-        return dois;
+        int usedBlck[];
+        int aux=0;
+        
+        // conta blocos ocupados e instancia um vetor para armazenar os indices
+        // dos blocos ocupados
+        ocupado = contaBlocos("ocupado");
+        usedBlck = new int[ocupado];
+        
+        // pecorre o vetor de bits e salva os indices dos blocos ocupados
+        for(int i=0; i<vector.size(); i++){
+            if(vector.get(i).equals("1")){
+                usedBlck[aux]=i;
+                aux++;
+            }
+        }
+        return usedBlck;
     }
     
     @Override
@@ -204,6 +218,32 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         return false;
     }
     
-   
+    // metodo auxiliar para imprimir o vetor
+    public void imprimirVetor(){
+        System.out.println("Vetor: "+vector);
+    }
+  
+    // metodo auxiliar para contar a quantidade de blocos livres ou ocupados
+    // recebe uma string como opção, "livre" -> conta os blocos livres
+    // "ocupado" -> conta blocos ocupados
+    public int contaBlocos(String op){
+        int qntd;
+        qntd=0;
+        if(op.equals("livre")){
+            for(int i=0; i<vector.size(); i++){
+                if(vector.get(i).equals("0")){
+                    qntd++;
+                }
+            }
+        }
+        else {
+            for(int i=0; i<vector.size(); i++){
+                if(vector.get(i).equals("1")){
+                    qntd++;
+                }
+            }
+        }
+        return qntd;
+    } 
     
 }

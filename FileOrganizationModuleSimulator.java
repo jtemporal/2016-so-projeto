@@ -19,6 +19,7 @@ public class FileOrganizationModuleSimulator {
 
         // declaracao das variaveis
         FileOrganizationManagerBits fomB;
+        FileOrganizationManagerInterlig fomI;
   
         int desaloc[];
         int freeBlck[];
@@ -137,7 +138,106 @@ public class FileOrganizationModuleSimulator {
                 }
             }   
         }else if (politica.equals("lista")){
-            System.out.println("A Politica de lista interligada ainda não foi implementada");
+
+            System.out.println("Politica: Lista Interligada\n");
+            fomI = new FileOrganizationManagerInterlig(arquivo); //só deve ser instanciado aqui
+                        
+            while(true){
+                System.out.println("\n\nEscolha uma das opcoes listadas abaixo: ");
+                System.out.println ("1: compact");                                      
+                System.out.println ("2: allocateDataBlock");                            
+                System.out.println ("3: freeDataBlocks");                               
+                System.out.println ("4: format");                                       
+                System.out.println ("5: getDataBlockInfo");                             
+                System.out.println ("6: getEmptyFileBlockList");                        
+                System.out.println ("7: getUsedFileBlockList");                         
+                System.out.println ("8: saveToFile");                                   
+                System.out.println ("0: sair");
+                do{
+                    op = sc.nextInt();
+                    if((op>8)||(op<0)){
+                        System.out.println("Error: Opcao invalida. Tente novamente.");
+                        System.out.print(">> ");
+                    }
+                }while((op>8)||(op<0));
+
+                switch (op){
+                    case 1:
+                        fomI.compact();
+                    break;
+
+                    case 2:
+                        int num;
+                        System.out.println("\nQuantos blocos quer alocar?");
+                        num = sc.nextInt();
+                        fomI.allocateDataBlock(num);
+                    break;
+
+                    case 3:
+                        //fomI.imprimirVetor();
+                        System.out.println("\nQuantos blocos voce deseja desalocar?");
+                        aux = sc.nextInt();
+                        desaloc = new int [aux];
+                        System.out.println("Digite o INDICE dos blocos separados por um enter. (LEMBRANDO QUE COMECA EM 0!)");
+                        for(int i=0; i<aux; i++){
+                            desaloc[i] = sc.nextInt();
+                        }
+                        if (fomI.freeDataBlocks(desaloc)){
+                            System.out.println("Blocos desalocados com sucesso!");
+                        }
+                        else {
+                            System.out.println("Falha ao desalocar blocos :(");
+                        }
+                    break;
+
+                    case 4:
+                        fomI.format();
+                    break;
+
+                    case 5:
+                        System.out.println("\nDigite o indice do bloco que deseja obter a informacao.");
+                        id = sc.nextInt();
+                        resposta = fomI.getDataBlockInfo(id);
+                        System.out.println(resposta);
+                                
+                    break;
+                    
+               /**     case 6:
+
+                        System.out.print("\nLista de blocos livres: ");
+                        freeBlck = fomI.getEmptyFileBlockList();
+                        for (int i=0; i<freeBlck.length; i++){
+                            System.out.print(freeBlck[i]+" ");
+                        }
+
+                    break;
+                    
+                    case 7:
+
+                        System.out.print("\nLista de blocos ocupados: ");
+                        usedBlck = fomI.getUsedFileBlockList();
+                        for (int i=0; i<usedBlck.length; i++){
+                            System.out.print(usedBlck[i]+" ");
+                        }
+
+                    break;*/
+                    
+                    case 8:
+                        System.out.println("\nTentando salvar o arquivo ;)");
+                        if(fomI.saveToFile(args[1])){
+                            System.out.println("Arquivo salvo com sucesso!");
+                        } else {
+                            System.out.println("Falha ao salvar o arquivo!");
+                        }
+                    break;
+
+                    case 0:
+                        System.out.println("Hasta la vista, baby.");
+                        System.exit(0);
+                    break;
+                }
+            }   
+            //System.out.println("A Politica de lista interligada ainda não foi implementada");
             //fomI = new FileOrganizationManagerInterlig(arquivo);
         }
         

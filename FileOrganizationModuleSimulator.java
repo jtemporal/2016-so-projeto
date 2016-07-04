@@ -202,25 +202,17 @@ public class FileOrganizationModuleSimulator {
                                 
                     break;
                     
-               /**     case 6:
+                    case 6:
 
-                        System.out.print("\nLista de blocos livres: ");
-                        freeBlck = fomI.getEmptyFileBlockList();
-                        for (int i=0; i<freeBlck.length; i++){
-                            System.out.print(freeBlck[i]+" ");
-                        }
+                        System.out.print("Método não implementado, volte mais tarde.");
 
                     break;
                     
                     case 7:
 
-                        System.out.print("\nLista de blocos ocupados: ");
-                        usedBlck = fomI.getUsedFileBlockList();
-                        for (int i=0; i<usedBlck.length; i++){
-                            System.out.print(usedBlck[i]+" ");
-                        }
+                        System.out.print("Método não implementado, estamos trabalhando para melhor atendê-lo.");
 
-                    break;*/
+                    break;
                     
                     case 8:
                         System.out.println("\nTentando salvar o arquivo ;)");
@@ -237,13 +229,11 @@ public class FileOrganizationModuleSimulator {
                     break;
                 }
             }   
-            //System.out.println("A Politica de lista interligada ainda não foi implementada");
-            //fomI = new FileOrganizationManagerInterlig(arquivo);
         }
         
         // caso a politica passada seja invalida
         else {
-            System.out.println("Quebrouuu");
+            System.out.println("Politica invalida. Tente novamente.");
             System.exit(-1);
         }
                 

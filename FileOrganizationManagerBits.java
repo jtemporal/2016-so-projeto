@@ -2,18 +2,13 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * @author Andre Pessoni
  * @author Catharina Bermal
  * @author Jessica Temporal
  * @author Joao Paulo Peres
  */
+
 public class FileOrganizationManagerBits implements ManagementInterface {
     
     // declaracao das variaveis
@@ -60,6 +55,7 @@ public class FileOrganizationManagerBits implements ManagementInterface {
             System.exit(-1);
         }
         else{
+             // reposiciona o ponteiro de leitura do arquivo para a posição inicial do mesmo
             raf.seek(0);
             vetor = new int [blocos];
             System.out.print("Vetor de bits resultante: ");
@@ -78,7 +74,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         raf.close();
     }       
     
-    //********************FUNCIONA***************************
+    /**
+     * compacta os blocos utilizados do disco, movendo os blocos
+     * disponíveis para o final
+     */
     @Override
     public void compact(){
         
@@ -98,9 +97,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         } 
         System.out.print("Vetor de bits resultante apos a compactacao: \n"+vector);   
     }
-    //*****************************************************
     
-    //*************FUNCIONA********************************
+    /**
+     * aloca uma determinada quantidade de blocos livres
+     */
     @Override
     public int[] allocateDataBlock(int numberOfBlocks){
             int num;
@@ -122,9 +122,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
             System.out.print(vector);
             return vetor;
     }
-    //****************************************************
     
-    //**************FUNCIONA******************************
+    /**
+     * disponibiliza blocos previamente alocados
+     */
     @Override
     public boolean freeDataBlocks(int[] blockId){
         int id[];
@@ -144,20 +145,22 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         }
         return true;
     }
-    //***************************************************
     
-    //*******************FUNCIONA************************
+    /**
+     * formata o sistema de arquivos, tornando todos os blocos disponíveis
+     */
     @Override
     public void format(){
         vector.clear();
         for(int i=0; i<blocos; i++){
             vector.add("0");
         }
-        System.out.print(vector);
+        System.out.println("Disco formatado com sucesso!");
     }
-    //**************************************************
     
-    //*********************FUNCIONA*********************
+    /**
+     * obtem informações sobre um bloco de dados
+     */
     @Override
     public String getDataBlockInfo(int blockId){
         String resposta="";
@@ -179,9 +182,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         }
         return resposta;  
     }
-    //***************************************************
     
-
+    /**
+     * recupera a lista de blocos disponíveis no sistema
+     */
     @Override
     public int[] getEmptyFileBlockList(){
         int emptyBlck[];
@@ -201,9 +205,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         }
         return emptyBlck;
     }
-    //***************************************************
-    
-    //***************************************************
+
+    /**
+     * recuperar a lista de blocos alocados no sistema
+     */
     @Override
     public int[] getUsedFileBlockList(){
         int usedBlck[];
@@ -223,9 +228,11 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         }
         return usedBlck;
     }
-    //***************************************************
     
-    //***************************************************
+    /**
+     * salvar em arquivo texto as informações de gerenciamento de espaço
+     * livre como um vetor de bits
+     */
     @Override
     public boolean saveToFile(String fileName){
         String escrever="";
@@ -246,7 +253,6 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         }
         return false;
     }
-    //***************************************************
     
     /**
      * Método auxiliar:
@@ -309,7 +315,10 @@ public class FileOrganizationManagerBits implements ManagementInterface {
         return linhas;
     }
 
-    // metodo aux imprime dados do arquivo
+    /**
+     * Método auxiliar:
+     * Utilizado para imprimir os dados do arquivo lido
+     */
     public void imprimeDados(String bits[], RandomAccessFile raf){
         col = countCol(bits);
         System.out.println("Numero de colunas: "+col);
